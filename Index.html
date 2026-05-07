@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- CONFIGURAÇÕES BÁSICAS -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garatuja Avançada</title>
+
+  <!-- CSS (ESTILO + LAYOUT) -->
+  <style>
+    /* RESET BÁSICO */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* CORPO DA PÁGINA */
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(45deg, #1a1a1a, #2c2c2c);
+      color: white;
+      min-height: 100vh;
+
+      /* FLEXBOX (centralização moderna) */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* CONTAINER PRINCIPAL */
+    .container {
+      background: #333;
+      padding: 20px;
+      border-radius: 12px;
+      width: 300px;
+      text-align: center;
+
+      /* sombra */
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    /* TÍTULO */
+    h1 {
+      margin-bottom: 10px;
+      color: cyan;
+    }
+
+    /* INPUT */
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+    }
+
+    /* BOTÃO */
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      background: purple;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: magenta;
+    }
+
+    /* LISTA */
+    ul {
+      list-style: none;
+      margin-top: 15px;
+      text-align: left;
+    }
+
+    li {
+      background: #444;
+      margin-top: 5px;
+      padding: 8px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* BOTÃO DE REMOVER */
+    .remove {
+      background: red;
+      border: none;
+      color: white;
+      padding: 3px 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HTML (ESTRUTURA) -->
+  <div class="container">
+    <h1>Lista de Tarefas</h1>
+
+    <!-- INPUT -->
+    <input type="text" id="entrada" placeholder="Digite algo...">
+
+    <!-- BOTÃO -->
+    <button id="botao">Adicionar</button>
+
+    <!-- LISTA -->
+    <ul id="lista"></ul>
+  </div>
+
+  <!-- TYPESCRIPT -->
+  <script type="module">
+
+    // ==============================
+    // TIPAGEM (TypeScript)
+    // ==============================
+
+    // Pegando elementos do HTML
+    const entrada = document.getElementById("entrada") as HTMLInputElement;
+    const botao = document.getElementById("botao") as HTMLButtonElement;
+    const lista = document.getElementById("lista") as HTMLUListElement;
+
+    // Tipo de dado personalizado
+    type Tarefa = {
+      texto: string;
+      id: number;
+    };
+
+    // Array tipado
+    let tarefas: Tarefa[] = [];
+
+    // ==============================
+    // FUNÇÃO PRINCIPAL
+    // ==============================
+
+    function adicionarTarefa(): void {
+      const valor = entrada.value.trim();
+
+      if (valor === "") return;
+
+      const novaTarefa: Tarefa = {
+        texto: valor,
+        id: Date.now()
+      };
+
+      tarefas.push(novaTarefa);
+      renderizar();
+
+      entrada.value = "";
+    }
+
+    // ==============================
+    // RENDERIZAÇÃO (DOM)
+    // ==============================
+
+    function renderizar(): void {
+      lista.innerHTML = "";
+
+      tarefas.forEach((tarefa) => {
+        const li = document.createElement("li");
+
+        li.innerText = tarefa.texto;
+
+        const btn = document.createElement("button");
+        btn.innerText = "X";
+        btn.classList.add("remove");
+
+        // EVENTO
+        btn.addEventListener("click", () => {
+          removerTarefa(tarefa.id);
+        });
+
+        li.appendChild(btn);
+        lista.appendChild(li);
+      });
+    }
+
+    // ==============================
+    // REMOÇÃO
+    // ==============================
+
+    function removerTarefa(id: number): void {
+      tarefas = tarefas.filter(t => t.id !== id);
+      renderizar();
+    }
+
+    // ==============================
+    // EVENTOS
+    // ==============================
+
+    botao.addEventListener("click", adicionarTarefa);
+
+    entrada.addEventListener("keypress", (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        adicionarTarefa();
+      }
+    });
+
+  </script>
+
+</body>
+</html>
