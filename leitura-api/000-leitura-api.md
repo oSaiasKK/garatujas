@@ -1,3 +1,4 @@
+``` TypeScript
 // Define o caminho do arquivo JSON onde os dados serão armazenados
 const jsonFilePath = __dirname + '/data.temp.json';
 // Array que armazena os itens em memória
@@ -237,3 +238,4 @@ const server = Bun.serve({
 
 // Exibe mensagem no console indicando que o servidor está rodando
 console.log(`Server running at http://localhost:${server.port}`);
+```
