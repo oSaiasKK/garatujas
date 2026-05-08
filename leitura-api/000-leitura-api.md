@@ -1,16 +1,12 @@
-// ==================== ARQUIVO: core.ts ====================
-
 // Define o caminho do arquivo JSON onde os dados serão armazenados
 const jsonFilePath = __dirname + '/data.temp.json';
 // Array que armazena os itens em memória
 const list: string[] = await loadFromFile();
 
 
-/**
- * Carrega os itens do arquivo JSON
- * Se o arquivo não existir, retorna um array vazio
- * Se houver outro erro, lança a exceção
- */
+//Carrega os itens do arquivo JSON
+//Se o arquivo não existir, retorna um array vazio
+//Se houver outro erro, lança a exceção
 async function loadFromFile() {
   try {
     // Lê o arquivo JSON usando a API do Bun
@@ -29,10 +25,8 @@ async function loadFromFile() {
 }
 
 
-/**
- * Salva o array 'list' no arquivo JSON
- * Sobrescreve o arquivo com os dados atualizados
- */
+//Salva o array 'list' no arquivo JSON
+//Sobrescreve o arquivo com os dados atualizados
 async function saveToFile() {
   try {
     // Escreve o array convertido para JSON no arquivo
@@ -44,28 +38,23 @@ async function saveToFile() {
 }
 
 
-/**
- * Adiciona um novo item ao final do array
- * Salva automaticamente no arquivo após adicionar
- */
+//Adiciona um novo item ao final do array
+//Salva automaticamente no arquivo após adicionar
 async function addItem(item: string) {
   list.push(item);
   await saveToFile();
 }
 
 
-/**
- * Retorna todos os itens do array
- */
+//Retorna todos os itens do array
 async function getItems() {
   return list;
 }
 
 
-/**
- * Atualiza um item em um índice específico
- * Valida se o índice está dentro dos limites do array
- */
+
+//Atualiza um item em um índice específico
+//Valida se o índice está dentro dos limites do array
 async function updateItem(index: number, newItem: string) {
   // Verifica se o índice é válido
   if (index < 0 || index >= list.length)
@@ -77,10 +66,9 @@ async function updateItem(index: number, newItem: string) {
 }
 
 
-/**
- * Remove um item do array em um índice específico
- * Valida se o índice está dentro dos limites
- */
+
+//Remove um item do array em um índice específico
+//Valida se o índice está dentro dos limites
 async function removeItem(index: number) {
   // Verifica se o índice é válido
   if (index < 0 || index >= list.length)
